@@ -30,8 +30,40 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(135deg, rgba(44, 62, 80, 0.5), rgba(52, 73, 94, 0.5));
+      background: radial-gradient(circle at center, #0a192f 0%, #000000 100%);
       z-index: -2;
+    }
+
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle var(--twinkle-duration) ease-in-out infinite;
+      box-shadow: 0 0 4px #fff;
+    }
+
+    @keyframes twinkle {
+      0%, 100% {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translate(0, 0);
+      }
+      50% {
+        transform: translate(var(--float-x), var(--float-y));
+      }
+      100% {
+        transform: translate(0, 0);
+      }
     }
 
     .bg-pattern {
@@ -311,6 +343,56 @@
   <div class="bg-pattern">
     <div class="bg-tile"></div>
   </div>
+  <script>
+    function createStarryBackground() {
+      const starsContainer = document.createElement('div');
+      starsContainer.style.position = 'fixed';
+      starsContainer.style.top = '0';
+      starsContainer.style.left = '0';
+      starsContainer.style.width = '100%';
+      starsContainer.style.height = '100%';
+      starsContainer.style.zIndex = '-1';
+      starsContainer.style.overflow = 'hidden';
+      
+      const numberOfStars = 200;
+      
+      for (let i = 0; i < numberOfStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random size between 1-3px
+        const size = Math.random() * 2 + 1;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        
+        // Random position
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        
+        // Random twinkle duration between 3-8s
+        star.style.setProperty('--twinkle-duration', `${3 + Math.random() * 5}s`);
+        
+        // Random float movement
+        star.style.setProperty('--float-x', `${(Math.random() - 0.5) * 20}px`);
+        star.style.setProperty('--float-y', `${(Math.random() - 0.5) * 20}px`);
+        
+        // Add floating animation
+        star.style.animation = `
+          twinkle ${star.style.getPropertyValue('--twinkle-duration')} ease-in-out infinite,
+          float ${15 + Math.random() * 10}s ease-in-out infinite
+        `;
+        
+        // Random delay for both animations
+        star.style.animationDelay = `${Math.random() * -10}s`;
+        
+        starsContainer.appendChild(star);
+      }
+      
+      document.body.insertBefore(starsContainer, document.body.firstChild);
+    }
+
+    document.addEventListener('DOMContentLoaded', createStarryBackground);
+  </script>
   <div class="container">
     <div class="calendar-wrapper">
       <div class="title-wrapper">
