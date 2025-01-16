@@ -426,8 +426,25 @@
 
       calculateEraDay() {
         const now = new Date();
-        const diffTime = Math.abs(now - this.startDate);
-        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const sunrise = this.getSunriseTimes();
+        const startDate = new Date('2025-01-15');
+        
+        // If we haven't reached the start date yet, return 1
+        if (now < startDate) {
+          return 1;
+        }
+
+        // If we're before today's sunrise, use previous day's count
+        if (now < sunrise) {
+          const yesterday = new Date(now);
+          yesterday.setDate(yesterday.getDate() - 1);
+          const diffDays = Math.floor((yesterday - startDate) / (1000 * 60 * 60 * 24));
+          return diffDays + 1; // Add 1 because we start from Era 1
+        }
+        
+        // If we're after sunrise, use today's count
+        const diffDays = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+        return diffDays + 1; // Add 1 because we start from Era 1
       }
 
       getMoonPhase() {
