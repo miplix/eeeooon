@@ -253,8 +253,8 @@
 
     .donut-icon {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
+      bottom: 50px;
+      right: 50px;
       width: 50px;
       height: 50px;
       cursor: pointer;
@@ -276,8 +276,8 @@
       position: fixed;
       bottom: 80px;
       right: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(50px);
       padding: 15px;
       border-radius: 10px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -337,12 +337,81 @@
         padding: 0.8rem;
       }
     }
+
+    /* Add new styles for the forecast panel */
+    .forecast-panel, .forecast-toggle, .forecast-item, .forecast-date {
+      display: none;
+    }
   </style>
 </head>
 <body>
   <div class="bg-pattern">
     <div class="bg-tile"></div>
   </div>
+  
+  <div class="container">
+    <div class="calendar-wrapper">
+      <div class="title-wrapper">
+        <h1>Календарь Эонов</h1>
+      </div>
+      
+      <div class="subtitle-wrapper">
+        <div class="eon-subtitle"></div>
+      </div>
+      
+      <div class="current-date">
+        <div class="gregorian-date"></div>
+        <div class="sunrise-time"></div>
+      </div>
+
+      <div class="alt-calendar">
+        <div class="eon-display">
+          <span class="number"></span>
+          <span class="label">Эон</span>
+        </div>
+        
+        <div class="era-display">
+          <span class="number"></span>
+          <span class="label">Эра</span>
+        </div>
+        
+        <div class="cycle-display">
+          <span class="number"></span>
+          <span class="label">Цикл</span>
+        </div>
+      </div>
+
+      <div class="moon-phase">
+        <svg class="moon" viewBox="0 0 100 100">
+          <circle class="moon-circle" cx="50" cy="50" r="45"/>
+          <path class="moon-mask" d=""/>
+        </svg>
+      </div>
+
+      <div class="next-full-moon"></div>
+    </div>
+  </div>
+
+  <div class="donut-icon">
+    <svg viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="40" fill="#FFB6C1"/>
+      <circle cx="50" cy="50" r="15" fill="#FF69B4"/>
+      <path d="M50 10A40 40 0 0 1 90 50" stroke="#FF69B4" stroke-width="8" fill="none"/>
+      <path d="M50 10A40 40 0 0 0 10 50" stroke="#FF69B4" stroke-width="8" fill="none"/>
+      <circle cx="65" cy="35" r="5" fill="white"/>
+      <circle cx="35" cy="65" r="5" fill="white"/>
+    </svg>
+  </div>
+
+  <div class="popup">
+    <div>Донейшн по желанию</div>
+    <div class="wallet-addresses">
+      <div class="wallet-address">donat1on.near</div>
+      <div class="wallet-address">UQBurTvcfmEtDfBdlPHR0BGPq7CPML3Luv_1_GuoUpNM5NXM</div>
+    </div>
+    <div></div>
+  </div>
+
   <script>
     function createStarryBackground() {
       const starsContainer = document.createElement('div');
@@ -393,69 +462,7 @@
 
     document.addEventListener('DOMContentLoaded', createStarryBackground);
   </script>
-  <div class="container">
-    <div class="calendar-wrapper">
-      <div class="title-wrapper">
-        <h1>Календарь Эонов</h1>
-      </div>
-      <div class="subtitle-wrapper">
-        <div class="eon-subtitle"></div>
-      </div>
-      
-      <div class="current-date">
-        <div class="gregorian-date"></div>
-        <div class="sunrise-time"></div>
-      </div>
-
-      <div class="alt-calendar">
-        <div class="eon-display">
-          <span class="number"></span>
-          <span class="label">Эон</span>
-        </div>
-        
-        <div class="era-display">
-          <span class="number"></span>
-          <span class="label">Эра</span>
-        </div>
-        
-        <div class="cycle-display">
-          <span class="number"></span>
-          <span class="label">Цикл</span>
-        </div>
-      </div>
-
-      <div class="moon-phase">
-        <svg class="moon" viewBox="0 0 100 100">
-          <circle class="moon-circle" cx="50" cy="50" r="45"/>
-          <path class="moon-mask" d=""/>
-        </svg>
-      </div>
-
-      <div class="next-full-moon"></div>
-      
-      <div class="donut-icon">
-        <svg viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="40" fill="#FFB6C1"/>
-          <circle cx="50" cy="50" r="15" fill="#FF69B4"/>
-          <path d="M50 10A40 40 0 0 1 90 50" stroke="#FF69B4" stroke-width="8" fill="none"/>
-          <path d="M50 10A40 40 0 0 0 10 50" stroke="#FF69B4" stroke-width="8" fill="none"/>
-          <circle cx="65" cy="35" r="5" fill="white"/>
-          <circle cx="35" cy="65" r="5" fill="white"/>
-        </svg>
-      </div>
-
-      <div class="popup">
-        <div>Отблагодарить автора можно донатом на кошелек near или ton:</div>
-        <div class="wallet-addresses">
-          <div class="wallet-address">donat1on.near</div>
-          <div class="wallet-address">UQBurTvcfmEtDfBdlPHR0BGPq7CPML3Luv_1_GuoUpNM5NXM</div>
-        </div>
-        <div>Благодарю</div>
-      </div>
-
-    </div>
-  </div>
-
+  
   <script type="module">
     import SunCalc from 'https://cdn.skypack.dev/suncalc';
 
@@ -464,8 +471,8 @@
         this.startDate = new Date('2025-01-15');
         this.currentCycle = 1;
         this.location = {
-          latitude: 53.9006, // Minsk latitude
-          longitude: 27.5590 // Minsk longitude
+          latitude: 53.9006,
+          longitude: 27.5590
         };
         
         this.eonDescriptions = {
@@ -478,26 +485,43 @@
           7: 'Эон Праздника и Перерождения'
         };
         
+        // Initialize immediately if document is ready, otherwise wait for DOMContentLoaded
         if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', () => this.init());
+          document.addEventListener('DOMContentLoaded', () => {
+            this.init();
+            this.startPeriodicUpdates();
+          });
         } else {
           this.init();
+          this.startPeriodicUpdates();
         }
+      }
+
+      startPeriodicUpdates() {
+        // Update every minute
+        setInterval(() => {
+          this.updateCalendar();
+        }, 60000);
       }
 
       getCurrentEon() {
         const now = new Date();
+        const sunrise = this.getSunriseTimes();
+        
+        // If current time is before sunrise, use previous day's eon
+        if (now < sunrise) {
+          const yesterday = new Date(now);
+          yesterday.setDate(yesterday.getDate() - 1);
+          let dayOfWeek = yesterday.getDay();
+          return dayOfWeek === 0 ? 7 : dayOfWeek;
+        }
+        
+        // After sunrise, use current day's eon
         let dayOfWeek = now.getDay();
         return dayOfWeek === 0 ? 7 : dayOfWeek;
       }
 
       init() {
-        this.initializeDisplay();
-        this.updateCalendar();
-        setInterval(() => this.updateCalendar(), 60000);
-      }
-
-      initializeDisplay() {
         this.elements = {
           gregorianDate: document.querySelector('.gregorian-date'),
           sunriseTime: document.querySelector('.sunrise-time'),
@@ -505,28 +529,30 @@
           eraNumber: document.querySelector('.era-display .number'),
           cycleNumber: document.querySelector('.cycle-display .number'),
           moonMask: document.querySelector('.moon-mask'),
-          nextFullMoon: document.querySelector('.next-full-moon')
+          nextFullMoon: document.querySelector('.next-full-moon'),
+          eonSubtitle: document.querySelector('.eon-subtitle')
         };
+        
+        this.updateCalendar();
       }
 
       calculateEraDay() {
         const now = new Date();
         const sunrise = this.getSunriseTimes();
-        const startDate = new Date('2025-01-15');
         
-        if (now < startDate) {
-          return 1;
-        }
-
+        // If before sunrise, calculate based on previous day
         if (now < sunrise) {
           const yesterday = new Date(now);
           yesterday.setDate(yesterday.getDate() - 1);
-          const diffDays = Math.floor((yesterday - startDate) / (1000 * 60 * 60 * 24));
-          return diffDays + 1;
+          const diffTime = Math.abs(yesterday - this.startDate);
+          const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+          return Math.max(1, diffDays + 1);
         }
         
-        const diffDays = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
-        return diffDays + 1; 
+        // After sunrise, calculate based on current day
+        const diffTime = Math.abs(now - this.startDate);
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        return Math.max(1, diffDays + 1);
       }
 
       getMoonPhase() {
@@ -586,21 +612,23 @@
         this.elements.sunriseTime.textContent = `Рассвет: ${sunrise.toLocaleTimeString('ru-RU')}`;
 
         const currentEon = this.getCurrentEon();
+        const currentEra = this.calculateEraDay();
+        
+        // Update center display elements
         this.elements.eonNumber.textContent = currentEon;
+        this.elements.eraNumber.textContent = currentEra;
+        this.elements.cycleNumber.textContent = this.currentCycle;
+        
+        // Update eon subtitle
+        this.elements.eonSubtitle.textContent = this.eonDescriptions[currentEon] || '';
 
-        const subtitle = document.querySelector('.eon-subtitle');
-        subtitle.textContent = this.eonDescriptions[currentEon] || '';
-
-        const era = this.calculateEraDay();
-        this.elements.eraNumber.textContent = era;
-
+        // Update moon display
         const moonPhase = this.getMoonPhase();
         this.updateMoonDisplay(moonPhase);
-        
-        this.elements.cycleNumber.textContent = this.currentCycle;
 
+        // Update next full moon
         const nextFullMoon = this.getNextFullMoon();
-        if (nextFullMoon && this.elements.nextFullMoon) {
+        if (nextFullMoon) {
           this.elements.nextFullMoon.textContent = `Следующее полнолуние: ${nextFullMoon.toLocaleDateString('ru-RU', {
             weekday: 'long',
             year: 'numeric',
@@ -611,49 +639,26 @@
           })}`;
         }
       }
+
+      generateForecast() {
+        return [];
+      }
+
+      updateForecastPanel() {
+        // Empty method
+      }
     }
 
+    // Initialize calendar
     const calendar = new AlternativeCalendar();
 
     document.addEventListener('DOMContentLoaded', () => {
+      // Simplified donation code only
       const donutIcon = document.querySelector('.donut-icon');
       const popup = document.querySelector('.popup');
-      const walletAddresses = document.querySelectorAll('.wallet-address');
-      let hasShownAutoPopup = false;
-
-      setTimeout(() => {
-        if (!hasShownAutoPopup) {
-          donutIcon.classList.add('wiggle');
-          
-          setTimeout(() => {
-            donutIcon.classList.remove('wiggle');
-          }, 1000); 
-
-          popup.textContent = '💜';
-          popup.classList.add('show');
-          hasShownAutoPopup = true;
-
-          setTimeout(() => {
-            popup.classList.remove('show');
-            setTimeout(() => {
-              popup.innerHTML = `
-                <div>Донейшн по желанию</div>
-                <div class="wallet-addresses">
-                  <div class="wallet-address">donat1on.near</div>
-                  <div class="wallet-address">UQBurTvcfmEtDfBdlPHR0BGPq7CPML3Luv_1_GuoUpNM5NXM</div>
-                </div>
-                <div></div>
-              `;
-            }, 300); 
-          }, 3000);
-        }
-      }, 5000);
-
+      
       donutIcon.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (!hasShownAutoPopup) {
-          return; 
-        }
         popup.classList.toggle('show');
       });
 
@@ -678,5 +683,6 @@
       });
     });
   </script>
+  
 </body>
 </html>
