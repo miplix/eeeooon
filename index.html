@@ -1,360 +1,375 @@
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Календарь Эонов</title>
-  <style>
-    :root {
-      --primary-color: #2c3e50;
-      --secondary-color: #34495e;
-      --accent-color: #e74c3c;
-      --text-color: #ecf0f1;
-    }
+<html><head><base href="https://example.com">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Календарь Эонов</title>
+<style>
+  :root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e; 
+    --accent-color: #e74c3c;
+    --text-color: #ecf0f1;
+  }
 
-    body {
-      margin: 0;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background-color: var(--primary-color);
-      color: var(--text-color);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
+  body {
+    margin: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
 
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(circle at center, #0a192f 0%, #000000 100%);
-      z-index: -2;
-    }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, #0a192f 0%, #000000 100%);
+    z-index: -2;
+  }
 
-    .star {
-      position: absolute;
-      background: #fff;
-      border-radius: 50%;
+  .star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle var(--twinkle-duration) ease-in-out infinite;
+    box-shadow: 0 0 4px #fff;
+  }
+
+  @keyframes twinkle {
+    0%, 100% {
       opacity: 0;
-      animation: twinkle var(--twinkle-duration) ease-in-out infinite;
-      box-shadow: 0 0 4px #fff;
+      transform: scale(0.5);
     }
-
-    @keyframes twinkle {
-      0%, 100% {
-        opacity: 0;
-        transform: scale(0.5);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(1);
-      }
+    50% {
+      opacity: 1;
+      transform: scale(1);
     }
+  }
 
-    @keyframes float {
-      0% {
-        transform: translate(0, 0);
-      }
-      50% {
-        transform: translate(var(--float-x), var(--float-y));
-      }
-      100% {
-        transform: translate(0, 0);
-      }
+  @keyframes float {
+    0% {
+      transform: translate(0, 0);
     }
-
-    .bg-pattern {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: -1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0.3;
-      overflow: hidden;
-      background: url('https://i.ibb.co/g7DGB0x/OIG3-0h7c-Dj-LSf-XPNQZ2j-FMq-Q.jpg') center/0% repeat;
-      width: 100%;
-      height: 100%;
-      position: absolute;
+    50% {
+      transform: translate(var(--float-x), var(--float-y));
     }
-
-    .bg-tile {
-      background: url('https://i.ibb.co/C9S57yT/OIG3-u7-NGJCz-IBhu17to-TM-IB.jpg') center/contain no-repeat;
-      width: 100%;
-      height: 100%;
-      position: absolute;
+    100% {
+      transform: translate(0, 0);
     }
+  }
 
+  .bg-pattern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.3;
+    overflow: hidden;
+    background: url('https://i.ibb.co/g7DGB0x/OIG3-0h7c-Dj-LSf-XPNQZ2j-FMq-Q.jpg') center/0% repeat;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+
+  .bg-tile {
+    background: url('https://i.ibb.co/C9S57yT/OIG3-u7-NGJCz-IBhu17to-TM-IB.jpg') center/contain no-repeat;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+
+  .container {
+    padding: 1rem;
+    width: 100%;
+    max-width: 700px;
+    margin: 1rem;
+    box-sizing: border-box;
+  }
+
+  .calendar-wrapper {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 1rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    animation: fadeIn 1s ease-out;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    color: #3498db;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.);
+    border-radius: 8px;
+    display: inline-block;
+  }
+
+  .title-wrapper {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .current-date {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .gregorian-date {
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .sunrise-time {
+    font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+    opacity: 0.8;
+  }
+
+  .alt-calendar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .eon-display,
+  .era-display,
+  .cycle-display {
+    text-align: center;
+  }
+
+  .eon-subtitle {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.3rem, 4.5vw, 2rem);
+    color: #3498db;
+    opacity: 0.9;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.);
+    border-radius: 8px;
+    display: inline-block;
+  }
+
+  .subtitle-wrapper {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .number {
+    display: block;
+    font-size: clamp(2rem, 8vw, 3rem);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .label {
+    font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+    opacity: 0.8;
+  }
+
+  .next-full-moon {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.);
+    border-radius: 8px;
+    font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+  }
+
+  .full-moons-list {
+    display: none;
+  }
+
+  .full-moon-item {
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    transition: background 0.3s ease;
+  }
+
+  .full-moon-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .full-moon-item.next-cycle {
+    border-left: 3px solid #3498db;
+    padding-left: 1rem;
+    font-weight: bold;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .donut-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  .donut-icon svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.3));
+    transition: transform 0.3s ease;
+  }
+
+  .donut-icon:hover svg {
+    transform: scale(1.1);
+  }
+
+  .donut-icon:active, .donut-icon:focus {
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .popup {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    z-index: 1000;
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .popup.show {
+    display: block;
+  }
+
+  .wallet-addresses {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .wallet-address {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px;
+    border-radius: 5px;
+    margin: 0;
+    cursor: pointer;
+    user-select: all;
+    font-family: monospace;
+    word-break: break-all;
+    transition: transform 0.2s ease, font-size 0.2s ease;
+  }
+
+  .wallet-address:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .wallet-address.clicked {
+    transform: scale(0.95);
+    font-size: 0.9em;
+  }
+
+  .moon-phase,
+  .moon,
+  .moon-circle,
+  .moon-mask {
+    display: none;
+  }
+
+  @media (max-width: 480px) {
     .container {
-      padding: 1rem;
-      width: 100%;
-      max-width: 800px;
-      margin: 1rem;
-      box-sizing: border-box;
+      padding: 0.5rem;
+      margin: 0.5rem;
     }
-
+    
     .calendar-wrapper {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
       padding: 1rem;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.);
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
     }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 0.5rem;
-      font-size: clamp(1.5rem, 5vw, 2.5rem);
-      color: #3498db;
-      padding: 0.5rem 1rem;
-      background: rgba(255, 255, 255, 0.);
-      border-radius: 8px;
-      display: inline-block;
-    }
-
-    .title-wrapper {
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-
-    .current-date {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .gregorian-date {
-      font-size: clamp(1rem, 4vw, 1.5rem);
-      margin-bottom: 0.5rem;
-    }
-
-    .sunrise-time {
-      font-size: clamp(0.9rem, 3.5vw, 1.2rem);
-      opacity: 0.8;
-    }
-
+    
     .alt-calendar {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 1rem;
-      margin: 1.5rem 0;
-    }
-
-    .eon-display,
-    .era-display,
-    .cycle-display {
-      text-align: center;
-    }
-
-    .eon-subtitle {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      font-size: clamp(1.3rem, 4.5vw, 2rem);
-      color: #3498db;
-      opacity: 0.9;
-      padding: 0.5rem 1rem;
-      background: rgba(255, 255, 255, 0.);
-      border-radius: 8px;
-      display: inline-block;
-    }
-
-    .subtitle-wrapper {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .number {
-      display: block;
-      font-size: clamp(2rem, 8vw, 3rem);
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-    }
-
-    .label {
-      font-size: clamp(0.9rem, 3.5vw, 1.2rem);
-      opacity: 0.8;
-    }
-
-    .moon-phase {
-      display: flex;
-      justify-content: center;
-      margin-top: 1.5rem;
-    }
-
-    .moon {
-      width: min(100px, 25vw);
-      height: min(100px, 25vw);
-    }
-
-    .moon-circle {
-      fill: #ffd700;
-    }
-
-    .moon-mask {
-      fill: var(--secondary-color);
-    }
-
-    .next-full-moon {
-      text-align: center;
-      margin-top: 1.5rem;
-      padding: 0.8rem;
-      background: rgba(255, 255, 255, 0.);
-      border-radius: 8px;
-      font-size: clamp(0.9rem, 3.5vw, 1.2rem);
-    }
-
-    .full-moons-list {
-      display: none;
+      gap: 0.5rem;
     }
 
     .full-moon-item {
-      padding: 0.5rem;
-      border-radius: 5px;
-      margin-bottom: 0.5rem;
-      background: rgba(255, 255, 255, 0.1);
-      transition: background 0.3s ease;
+      font-size: 0.9rem;
+      padding: 0.8rem;
     }
-
-    .full-moon-item:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    .full-moon-item.next-cycle {
-      border-left: 3px solid #3498db;
-      padding-left: 1rem;
-      font-weight: bold;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes wiggle {
-      0% { transform: rotate(0deg); }
-      25% { transform: rotate(-10deg); }
-      75% { transform: rotate(10deg); }
-      100% { transform: rotate(0deg); }
-    }
-
-    .wiggle {
-      animation: wiggle 1s ease;
-    }
-
-    .calendar-wrapper {
-      animation: fadeIn 1s ease-out;
-    }
-
-    .donut-icon {
-      position: fixed;
-      bottom: 50px;
-      right: 50px;
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
-      z-index: 1000;
-    }
-
-    .donut-icon svg {
-      width: 100%;
-      height: 100%;
-      filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.3));
-      transition: transform 0.3s ease;
-    }
-
-    .donut-icon:hover svg {
-      transform: scale(1.1);
-    }
-
-    .popup {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(50px);
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      max-width: 300px;
-      z-index: 1000;
-      display: none;
-      animation: fadeIn 0.3s ease-out;
-    }
-
-    .popup.show {
-      display: block;
-    }
-
-    .wallet-addresses {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .wallet-address {
-      background: rgba(255, 255, 255, 0.2);
-      padding: 8px;
-      border-radius: 5px;
-      margin: 0;
-      cursor: pointer;
-      user-select: all;
-      font-family: monospace;
-      word-break: break-all;
-      transition: transform 0.2s ease, font-size 0.2s ease;
-    }
-
-    .wallet-address:hover {
-      background: rgba(255, 255, 255, 0.3);
-    }
-
-    .wallet-address.clicked {
-      transform: scale(0.95);
-      font-size: 0.9em;
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 0.5rem;
-        margin: 0.5rem;
-      }
-      
-      .calendar-wrapper {
-        padding: 1rem;
-      }
-      
-      .alt-calendar {
-        gap: 0.5rem;
-      }
-
-      .full-moon-item {
-        font-size: 0.9rem;
-        padding: 0.8rem;
-      }
-    }
-
-    /* Add new styles for the forecast panel */
-    .forecast-panel, .forecast-toggle, .forecast-item, .forecast-date {
-      display: none;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
   <div class="bg-pattern">
     <div class="bg-tile"></div>
   </div>
-  
+  <script>
+    function createStarryBackground() {
+      const starsContainer = document.createElement('div');
+      starsContainer.style.position = 'fixed';
+      starsContainer.style.top = '0';
+      starsContainer.style.left = '0';
+      starsContainer.style.width = '100%';
+      starsContainer.style.height = '100%';
+      starsContainer.style.zIndex = '-1';
+      starsContainer.style.overflow = 'hidden';
+      
+      const numberOfStars = 200;
+      
+      for (let i = 0; i < numberOfStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        const size = Math.random() * 2 + 1;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        
+        star.style.setProperty('--twinkle-duration', `${3 + Math.random() * 5}s`);
+        
+        star.style.setProperty('--float-x', `${(Math.random() - 0.5) * 20}px`);
+        star.style.setProperty('--float-y', `${(Math.random() - 0.5) * 20}px`);
+        
+        star.style.animation = `
+          twinkle ${star.style.getPropertyValue('--twinkle-duration')} ease-in-out infinite,
+          float ${15 + Math.random() * 10}s ease-in-out infinite
+        `;
+        
+        star.style.animationDelay = `${Math.random() * -10}s`;
+        
+        starsContainer.appendChild(star);
+      }
+      
+      document.body.insertBefore(starsContainer, document.body.firstChild);
+    }
+
+    document.addEventListener('DOMContentLoaded', createStarryBackground);
+  </script>
   <div class="container">
     <div class="calendar-wrapper">
       <div class="title-wrapper">
         <h1>Календарь Эонов</h1>
       </div>
-      
       <div class="subtitle-wrapper">
         <div class="eon-subtitle"></div>
       </div>
@@ -381,98 +396,44 @@
         </div>
       </div>
 
-      <div class="moon-phase">
-        <svg class="moon" viewBox="0 0 100 100">
-          <circle class="moon-circle" cx="50" cy="50" r="45"/>
-          <path class="moon-mask" d=""/>
+      <div class="next-full-moon"></div>
+      
+      <div class="donut-icon">
+        <svg viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="#FFB6C1"/>
+          <circle cx="50" cy="50" r="15" fill="#FF69B4"/>
+          <path d="M50 10A40 40 0 0 1 90 50" stroke="#FF69B4" stroke-width="8" fill="none"/>
+          <path d="M50 10A40 40 0 0 0 10 50" stroke="#FF69B4" stroke-width="8" fill="none"/>
+          <circle cx="65" cy="35" r="5" fill="white"/>
+          <circle cx="35" cy="65" r="5" fill="white"/>
         </svg>
       </div>
 
-      <div class="next-full-moon"></div>
+      <div class="popup">
+        <div>Донейшн по желанию</div>
+        <div class="wallet-addresses">
+          <div class="wallet-address">donat1on.near</div>
+          <div class="wallet-address">UQBurTvcfmEtDfBdlPHR0BGPq7CPML3Luv_1_GuoUpNM5NXM</div>
+        </div>
+        <div></div>
+      </div>
+
     </div>
   </div>
 
-  <div class="donut-icon">
-    <svg viewBox="0 0 100 100">
-      <circle cx="50" cy="50" r="40" fill="#FFB6C1"/>
-      <circle cx="50" cy="50" r="15" fill="#FF69B4"/>
-      <path d="M50 10A40 40 0 0 1 90 50" stroke="#FF69B4" stroke-width="8" fill="none"/>
-      <path d="M50 10A40 40 0 0 0 10 50" stroke="#FF69B4" stroke-width="8" fill="none"/>
-      <circle cx="65" cy="35" r="5" fill="white"/>
-      <circle cx="35" cy="65" r="5" fill="white"/>
-    </svg>
-  </div>
-
-  <div class="popup">
-    <div>Донейшн по желанию</div>
-    <div class="wallet-addresses">
-      <div class="wallet-address">donat1on.near</div>
-      <div class="wallet-address">UQBurTvcfmEtDfBdlPHR0BGPq7CPML3Luv_1_GuoUpNM5NXM</div>
-    </div>
-    <div></div>
-  </div>
-
-  <script>
-    function createStarryBackground() {
-      const starsContainer = document.createElement('div');
-      starsContainer.style.position = 'fixed';
-      starsContainer.style.top = '0';
-      starsContainer.style.left = '0';
-      starsContainer.style.width = '100%';
-      starsContainer.style.height = '100%';
-      starsContainer.style.zIndex = '-1';
-      starsContainer.style.overflow = 'hidden';
-      
-      const numberOfStars = 200;
-      
-      for (let i = 0; i < numberOfStars; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        
-        // Random size between 1-3px
-        const size = Math.random() * 2 + 1;
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        
-        // Random position
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * 100}%`;
-        
-        // Random twinkle duration between 3-8s
-        star.style.setProperty('--twinkle-duration', `${3 + Math.random() * 5}s`);
-        
-        // Random float movement
-        star.style.setProperty('--float-x', `${(Math.random() - 0.5) * 20}px`);
-        star.style.setProperty('--float-y', `${(Math.random() - 0.5) * 20}px`);
-        
-        // Add floating animation
-        star.style.animation = `
-          twinkle ${star.style.getPropertyValue('--twinkle-duration')} ease-in-out infinite,
-          float ${15 + Math.random() * 10}s ease-in-out infinite
-        `;
-        
-        // Random delay for both animations
-        star.style.animationDelay = `${Math.random() * -10}s`;
-        
-        starsContainer.appendChild(star);
-      }
-      
-      document.body.insertBefore(starsContainer, document.body.firstChild);
-    }
-
-    document.addEventListener('DOMContentLoaded', createStarryBackground);
-  </script>
-  
   <script type="module">
     import SunCalc from 'https://cdn.skypack.dev/suncalc';
+
+    const ERA_START_DATE = new Date(Date.UTC(2025, 0, 15, 6, 20, 0)); // 15 января 2025 года, 9:20 по Минску
+    const LAST_FULL_MOON_START_DATE = new Date(Date.UTC(2025, 0, 13, 22, 27, 0));
 
     class AlternativeCalendar {
       constructor() {
         this.startDate = new Date('2025-01-15');
         this.currentCycle = 1;
         this.location = {
-          latitude: 53.9006,
-          longitude: 27.5590
+          latitude: 53.9006, // Minsk latitude
+          longitude: 27.5590 // Minsk longitude
         };
         
         this.eonDescriptions = {
@@ -485,85 +446,67 @@
           7: 'Эон Праздника и Перерождения'
         };
         
-        // Initialize immediately if document is ready, otherwise wait for DOMContentLoaded
         if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', () => {
-            this.init();
-            this.startPeriodicUpdates();
-          });
+          document.addEventListener('DOMContentLoaded', () => this.init());
         } else {
           this.init();
-          this.startPeriodicUpdates();
         }
-      }
-
-      startPeriodicUpdates() {
-        // Update every minute
-        setInterval(() => {
-          this.updateCalendar();
-        }, 60000);
       }
 
       getCurrentEon() {
         const now = new Date();
         const sunrise = this.getSunriseTimes();
+        const dayOfWeek = now.getDay();
         
-        // If current time is before sunrise, use previous day's eon
+        const eonNumber = (dayOfWeek === 0) ? 7 : dayOfWeek;
+        
         if (now < sunrise) {
-          const yesterday = new Date(now);
-          yesterday.setDate(yesterday.getDate() - 1);
-          let dayOfWeek = yesterday.getDay();
-          return dayOfWeek === 0 ? 7 : dayOfWeek;
+          const previousEonNumber = eonNumber === 1 ? 7 : eonNumber - 1;
+          return previousEonNumber;
         }
         
-        // After sunrise, use current day's eon
-        let dayOfWeek = now.getDay();
-        return dayOfWeek === 0 ? 7 : dayOfWeek;
+        return eonNumber;
       }
 
       init() {
+        this.initializeDisplay();
+        this.updateCalendar();
+        setInterval(() => this.updateCalendar(), 60000);
+      }
+
+      initializeDisplay() {
         this.elements = {
           gregorianDate: document.querySelector('.gregorian-date'),
           sunriseTime: document.querySelector('.sunrise-time'),
           eonNumber: document.querySelector('.eon-display .number'),
           eraNumber: document.querySelector('.era-display .number'),
           cycleNumber: document.querySelector('.cycle-display .number'),
-          moonMask: document.querySelector('.moon-mask'),
-          nextFullMoon: document.querySelector('.next-full-moon'),
-          eonSubtitle: document.querySelector('.eon-subtitle')
+          nextFullMoon: document.querySelector('.next-full-moon')
         };
-        
-        this.updateCalendar();
       }
 
       calculateEraDay() {
         const now = new Date();
         const sunrise = this.getSunriseTimes();
         
-        // If before sunrise, calculate based on previous day
+        if (now < ERA_START_DATE) {
+          return 1;
+        }
+
         if (now < sunrise) {
           const yesterday = new Date(now);
           yesterday.setDate(yesterday.getDate() - 1);
-          const diffTime = Math.abs(yesterday - this.startDate);
-          const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-          return Math.max(1, diffDays + 1);
+          const diffDays = Math.floor((yesterday - ERA_START_DATE) / (1000 * 60 * 60 * 24));
+          return diffDays + 1;
         }
         
-        // After sunrise, calculate based on current day
-        const diffTime = Math.abs(now - this.startDate);
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-        return Math.max(1, diffDays + 1);
-      }
-
-      getMoonPhase() {
-        const now = new Date();
-        const moonIllumination = SunCalc.getMoonIllumination(now);
-        return moonIllumination.phase;
+        const diffDays = Math.floor((now - ERA_START_DATE) / (1000 * 60 * 60 * 24));
+        return diffDays + 1;
       }
 
       getNextFullMoon() {
         const now = new Date();
-        const minskOffset = 3; 
+        const minskOffset = 3;
         let date = new Date();
         let found = false;
         
@@ -583,21 +526,6 @@
         return times.sunrise;
       }
 
-      updateMoonDisplay(phase) {
-        const r = 45;
-        const cx = 50;
-        const cy = 50;
-        
-        const phi = 2 * Math.PI * phase;
-        const x = cx + r * Math.cos(phi);
-        const y = cy + r * Math.sin(phi);
-        
-        const path = `M${cx},${cy - r} A${r},${r} 0 0,1 ${cx},${cy + r} A${r},${r} 0 0,1 ${cx},${cy - r}
-                      M${cx},${cy - r} A${r},${r} 0 0,${phase < 0.5 ? 1 : 0} ${x},${y}`;
-        
-        this.elements.moonMask.setAttribute('d', path);
-      }
-
       updateCalendar() {
         const now = new Date();
         
@@ -612,48 +540,31 @@
         this.elements.sunriseTime.textContent = `Рассвет: ${sunrise.toLocaleTimeString('ru-RU')}`;
 
         const currentEon = this.getCurrentEon();
-        const currentEra = this.calculateEraDay();
-        
-        // Update center display elements
         this.elements.eonNumber.textContent = currentEon;
-        this.elements.eraNumber.textContent = currentEra;
+
+        const subtitle = document.querySelector('.eon-subtitle');
+        subtitle.textContent = this.eonDescriptions[currentEon] || '';
+
+        const era = this.calculateEraDay();
+        this.elements.eraNumber.textContent = era;
+
         this.elements.cycleNumber.textContent = this.currentCycle;
-        
-        // Update eon subtitle
-        this.elements.eonSubtitle.textContent = this.eonDescriptions[currentEon] || '';
 
-        // Update moon display
-        const moonPhase = this.getMoonPhase();
-        this.updateMoonDisplay(moonPhase);
-
-        // Update next full moon
         const nextFullMoon = this.getNextFullMoon();
-        if (nextFullMoon) {
-          this.elements.nextFullMoon.textContent = `Следующее полнолуние: ${nextFullMoon.toLocaleDateString('ru-RU', {
+        if (nextFullMoon && this.elements.nextFullMoon) {
+          const formattedDate = nextFullMoon.toLocaleDateString('ru-RU', {
             weekday: 'long',
-            year: 'numeric',
             month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-          })}`;
+            day: 'numeric'
+          });
+          this.elements.nextFullMoon.textContent = `Следующее полнолуние: ${formattedDate}`;
         }
-      }
-
-      generateForecast() {
-        return [];
-      }
-
-      updateForecastPanel() {
-        // Empty method
       }
     }
 
-    // Initialize calendar
     const calendar = new AlternativeCalendar();
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Simplified donation code only
       const donutIcon = document.querySelector('.donut-icon');
       const popup = document.querySelector('.popup');
       
@@ -683,6 +594,5 @@
       });
     });
   </script>
-  
 </body>
 </html>
