@@ -101,8 +101,8 @@
   .calendar-wrapper {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
-    padding: 1rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.);
+    padding: 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
     animation: fadeIn 1s ease-out;
@@ -321,6 +321,62 @@
   <div class="bg-pattern">
     <div class="bg-tile"></div>
   </div>
+  
+  <div class="donut-icon">
+    <svg viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="40" fill="#FFB6C1"/>
+      <circle cx="50" cy="50" r="15" fill="#FF69B4"/>
+      <path d="M50 10A40 40 0 0 1 90 50" stroke="#FF69B4" stroke-width="8" fill="none"/>
+      <path d="M50 10A40 40 0 0 0 10 50" stroke="#FF69B4" stroke-width="8" fill="none"/>
+      <circle cx="65" cy="35" r="5" fill="white"/>
+      <circle cx="35" cy="65" r="5" fill="white"/>
+    </svg>
+  </div>
+
+  <div class="popup">
+    <div>Донейшн по желанию</div>
+    <div class="wallet-addresses">
+      <div class="wallet-address">donat1on.near</div>
+      <div class="wallet-address">UQBurTvcfmEtDfBdlPHR0BGPq7CPML3Luv_1_GuoUpNM5NXM</div>
+    </div>
+    <div></div>
+  </div>
+
+  <div class="container">
+    <div class="calendar-wrapper">
+      <div class="title-wrapper">
+        <h1>Календарь Эонов</h1>
+      </div>
+      <div class="subtitle-wrapper">
+        <div class="eon-subtitle"></div>
+      </div>
+      
+      <div class="current-date">
+        <div class="gregorian-date"></div>
+        <div class="sunrise-time"></div>
+      </div>
+
+      <div class="alt-calendar">
+        <div class="eon-display">
+          <span class="number"></span>
+          <span class="label">Эон</span>
+        </div>
+        
+        <div class="era-display">
+          <span class="number"></span>
+          <span class="label">Эра</span>
+        </div>
+        
+        <div class="cycle-display">
+          <span class="number"></span>
+          <span class="label">Цикл</span>
+        </div>
+      </div>
+
+      <div class="next-full-moon"></div>
+    </div>
+  </div>
+
   <script>
     function createStarryBackground() {
       const starsContainer = document.createElement('div');
@@ -365,62 +421,6 @@
 
     document.addEventListener('DOMContentLoaded', createStarryBackground);
   </script>
-  <div class="container">
-    <div class="calendar-wrapper">
-      <div class="title-wrapper">
-        <h1>Календарь Эонов</h1>
-      </div>
-      <div class="subtitle-wrapper">
-        <div class="eon-subtitle"></div>
-      </div>
-      
-      <div class="current-date">
-        <div class="gregorian-date"></div>
-        <div class="sunrise-time"></div>
-      </div>
-
-      <div class="alt-calendar">
-        <div class="eon-display">
-          <span class="number"></span>
-          <span class="label">Эон</span>
-        </div>
-        
-        <div class="era-display">
-          <span class="number"></span>
-          <span class="label">Эра</span>
-        </div>
-        
-        <div class="cycle-display">
-          <span class="number"></span>
-          <span class="label">Цикл</span>
-        </div>
-      </div>
-
-      <div class="next-full-moon"></div>
-      
-      <div class="donut-icon">
-        <svg viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="40" fill="#FFB6C1"/>
-          <circle cx="50" cy="50" r="15" fill="#FF69B4"/>
-          <path d="M50 10A40 40 0 0 1 90 50" stroke="#FF69B4" stroke-width="8" fill="none"/>
-          <path d="M50 10A40 40 0 0 0 10 50" stroke="#FF69B4" stroke-width="8" fill="none"/>
-          <circle cx="65" cy="35" r="5" fill="white"/>
-          <circle cx="35" cy="65" r="5" fill="white"/>
-        </svg>
-      </div>
-
-      <div class="popup">
-        <div>Донейшн по желанию</div>
-        <div class="wallet-addresses">
-          <div class="wallet-address">donat1on.near</div>
-          <div class="wallet-address">UQBurTvcfmEtDfBdlPHR0BGPq7CPML3Luv_1_GuoUpNM5NXM</div>
-        </div>
-        <div></div>
-      </div>
-
-    </div>
-  </div>
-
   <script type="module">
     import SunCalc from 'https://cdn.skypack.dev/suncalc';
 
