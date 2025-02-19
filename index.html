@@ -577,6 +577,41 @@
         const era = this.calculateEraDay();
         this.elements.eraNumber.textContent = era;
 
+        // Update cycle based on date
+        if (now > new Date(2025, 1, 14)) { // February is month 1 (zero-based)
+          this.currentCycle = 2;
+        }
+        if (now > new Date(2025, 2, 14)) { // March is month 2
+          this.currentCycle = 3;
+        }
+        if (now > new Date(2025, 3, 13)) { // April is month 3
+          this.currentCycle = 4;
+        }
+        if (now > new Date(2025, 4, 12)) { // May is month 4
+          this.currentCycle = 5;
+        }
+        if (now > new Date(2025, 5, 11)) { // June is month 5
+          this.currentCycle = 6;
+        }
+        if (now > new Date(2025, 6, 10)) { // Jule is month 6
+          this.currentCycle = 7;
+        }
+        if (now > new Date(2025, 7, 9)) { // August is month 7
+          this.currentCycle = 8;
+        }
+        if (now > new Date(2025, 8, 7)) { // September is month 8
+          this.currentCycle = 9;
+        }
+        if (now > new Date(2025, 9, 7)) { // October is month 9
+          this.currentCycle = 10;
+        }
+        if (now > new Date(2025, 10, 5)) { // November is month 10
+          this.currentCycle = 11;
+        }
+        if (now > new Date(2025, 11, 5)) { // December is month 11
+          this.currentCycle = 12;
+        }
+
         this.elements.cycleNumber.textContent = this.currentCycle;
 
         const nextFullMoon = this.getNextFullMoon();
