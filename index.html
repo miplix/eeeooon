@@ -622,26 +622,6 @@
         }
       });
     });
-
-    function getCycleCount() {
-    const currentDate = new Date();
-    const cutoffDate1 = new Date("2025-02-14");
-    const cutoffDate2 = new Date("2025-03-14");
-    let cycle = 1;
-
-    if (currentDate > cutoffDate1) {
-      cycle = 2;
-    }
-    if (currentDate > cutoffDate2) {
-      cycle = 3;
-    }
-
-    console.log("Количество циклов:", cycle);
-    return cycle;
-  }
-
-  getCycleCount(); // Вызываем функцию для теста
-    
   </script>
 </body>
 </html>
